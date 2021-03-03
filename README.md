@@ -8,6 +8,10 @@ This Ui Library is Still In Developing.
 
 It Would Be Continued For My Plan To Be Completed
 
+```lua
+print("cheating")
+```
+
 ## Credits
 
 - RealReal#0001
