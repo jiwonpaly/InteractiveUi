@@ -171,6 +171,49 @@ function Functions:DraggingEnded(callback)
    table.insert(self.ended,callback)
 end
 
+function Functions:HSV2RGB(h,s,v)
+   local r,g,b,i,f,p,q,t;
+
+   i = math.floor(h * 6)
+   f = h * 6 - i
+   p = v * (1 - s)
+   q = v * ( 1 - f * s)
+   t = v * (1 - (1 - f) * s)
+
+   local newI = i % 6
+
+   if (newI == 0) then
+      r = v
+      g = t
+      b = p
+   elseif newI == 1 then
+      r = q
+      g = v
+      b = p
+   elseif newI == 2 then
+      r = p
+      g = v
+      b = t
+   elseif newI == 3 then
+      r = p
+      g = q
+      b = v
+   elseif newI == 4 then
+      r = t
+      g = p
+      b = v
+   elseif newI == 5 then
+      r = v
+      g = p
+      b = q 
+   end
+
+   return {
+      r = math.round(r * 255),
+      g = math.round(g * 255),
+      b = math.round(b * 255)
+   }
+end
 
 local Library = {}
 local Page = {}
@@ -1121,7 +1164,7 @@ function Section:AddColorpicker(text,default,callback)
 
    local Color = {1,1,1}
 
-   local function Getp()
+   local function Getp(NewX,NewY)
       local x,y = Mouse.X,Mouse.Y
       local Main = Frame_2
       
@@ -1130,23 +1173,35 @@ function Section:AddColorpicker(text,default,callback)
       
       Color = {1-X1 or Color[1] , 1-Y1 or Color[2] , Color[3]}
 
-      TweenService:Create(Main.ImageLabel,TweenInfo.new(0.05),{
-         ['Position'] = UDim2.new(X1,-5,Y1 ,0)
-      }):Play()
+      if x and y then
+         TweenService:Create(Main.ImageLabel,TweenInfo.new(0.05),{
+            ['Position'] = UDim2.new(1 - NewX,-5,1 - NewY,0)
+         }):Play()
+      else
+         TweenService:Create(Main.ImageLabel,TweenInfo.new(0.05),{
+            ['Position'] = UDim2.new(X1,-5,Y1 ,0)
+         }):Play()
+      end
 
       return X1,Y1
    end
 
-   local function GetSaturation()
+   local function GetSaturation(NewY)
       local y = Mouse.Y
       local Saturation = cc
 
     	local Y1 = math.clamp((y - Saturation.AbsolutePosition.Y) / Saturation.AbsoluteSize.Y,0,1)
       Color = {Color[1] , Color[2] , Y1 or Color[3]}
 
-      TweenService:Create(Mover,TweenInfo.new(0.05),{
-         ['Position'] = UDim2.new(Mover.Position.X.Scale,0,Y1,0)
-      }):Play()
+      if y then
+         TweenService:Create(Mover,TweenInfo.new(0.05),{
+            ['Position'] = UDim2.new(Mover.Position.X.Scale,0,NewY,0)
+         }):Play()
+      else
+         TweenService:Create(Mover,TweenInfo.new(0.05),{
+            ['Position'] = UDim2.new(Mover.Position.X.Scale,0,Y1,0)
+         }):Play()
+      end
 
 	   return Y1
    end
@@ -1157,14 +1212,24 @@ function Section:AddColorpicker(text,default,callback)
       Select.BackgroundColor3 = Color3.fromHSV(unpack(Color))
       Saturation.BackgroundColor3 = Color3.fromHSV(Color[1],Color[2],1)
 
-      local r,g,b = unpack(Color)
+    
+      local res = Functions:HSV2RGB(Color[1],Color[2],Color[3])
 
-      callback( Color3.fromRGB(r*255,g*255,b*255) )
+      callback(Color3.new(res.r,res.g,res.b))
    end
  
    Functions:DraggingEnded(function()
       mouseDown,mouseDown1 = false,false
    end)
+
+
+   if default then
+      local h,s,v = Color3.toHSV(default)
+      SetColor(h,s,v)
+      Getp(h,v)
+      GetSaturation(s)
+   end
+
 
    Frame_2.InputBegan:Connect(function(a)
       local Main = Frame_2
@@ -1228,5 +1293,4 @@ function Section:UpdateColorpicker(picker,text,color,active)
       end
    end
 end
-
 return Library
