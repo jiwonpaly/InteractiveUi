@@ -55,3 +55,7 @@ Section:AddLabel("text")
 ## Credits
 
 - RealReal#0001
+
+## Bug Fixes
+
+- Bug That Occured When Resize Section Which Dont Have Any Child has Been Fixed
