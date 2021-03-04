@@ -21,19 +21,33 @@ local Window = library.new("Library Title")
 local Tab = Window:addPage("Page Title")
 local Section = Tab:addSection("Section Title")
 
-Section:AddButton("text",callback)
+Section:AddButton("text",function()
+   print("hi")
+end)
 
-Section:AddToggle("text",default (boolean),callback)
+Section:AddToggle("text",false,function(v)
+   print(v)
+end)
 
-Section:AddDropdown("text",list (table),callback)
+Section:AddDropdown("text",{"whatever"},function(v)
+   print(v)
+end)
 
-Section:AddSlider("text",default,min,max,callback)
+Section:AddSlider("text",10,0,100,function(v)
+   print(v)
+end)
 
-Section:AddTextbox("text",default,callback)
+Section:AddTextbox("text","placeholder",function(v)
+   print(v)
+end)
 
-Section:AddColorpicker("text",default (Color3),callback)
+Section:AddColorpicker("text",Color3.fromRGB(255,0,0),function(v)
+   print(v)
+end)
 
-Section:AddKeybind("text",default key,callback)
+Section:AddKeybind("text",Enum.KeyCode.H,function()
+   print("Clicked")
+end)
 
 Section:AddLabel("text")
 
