@@ -470,7 +470,7 @@ function Library:SelectPage(page,toggle)
 
    else
       for i,v in pairs (page.Sections) do
-         Functions:Tween(v.Container,{Size = UDim2.new(1,-30,0,0)})
+         Functions:Tween(v.Container,{Size = UDim2.new(1,-30,0,0)},0.07)
       end
 
       wait(.1)
