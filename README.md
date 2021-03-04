@@ -23,7 +23,7 @@ local Section = Tab:addSection("Section Title")
 
 Section:AddButton("text",callback)
 
-Section:AddToggle("text",defualt (boolean),callback)
+Section:AddToggle("text",default (boolean),callback)
 
 Section:AddDropdown("text",list (table),callback)
 
