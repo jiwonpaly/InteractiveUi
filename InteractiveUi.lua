@@ -487,6 +487,21 @@ function Library:Resize()
    return PageList
 end
 
+function Library:Toggle()
+   local DefaultSize = UDim2.new(0, 748, 0, 442)
+   if self.activated then
+      self.Main.ClipsDescendants = true
+      Functions:Tween(self.Main,{Size = UDim2.new(0,0,0,0)},0.4)
+      self.activated = false
+      wait(.3)
+   else
+      Functions:Tween(self.Main,{Size = DefaultSize},0.4)
+      wait(.3)
+      self.activated = true
+      self.Main.ClipsDescendants = false
+   end
+end
+
 function Page:Resize(Scroll)
    local BottomMargin = 20
 
@@ -1215,6 +1230,7 @@ function Section:AddColorpicker(text,default,callback)
     
       local res = Functions:HSV2RGB(Color[1],Color[2],Color[3])
 
+      ColorVal.Text = "r: "..res.r.." g: "..res.g.." b: "..res.b
       callback(Color3.new(res.r,res.g,res.b))
    end
  
