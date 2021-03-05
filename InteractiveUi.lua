@@ -388,6 +388,7 @@ function Section.new(page,Title)
    SectionFrame.BorderSizePixel = 0
    SectionFrame.Position = UDim2.new(0.0629496425, 0, 0, 0)
    SectionFrame.Size = UDim2.new(1, -30, 0, 30)
+   SectionFrame.ClipsDescendants = true
 
    SectionTitle.Name = "SectionTitle"
    SectionTitle.Parent = SectionFrame
@@ -886,7 +887,7 @@ function Section:AddSlider(text,defualt,min,max,callback)
       while dragging do
 
          local val = self:UpdateSlider(Slider,nil,nil,min,max,defualt)
-         callback(val)
+         callback(tonumber(val))
 
          Input.Text = val
 
@@ -1188,7 +1189,8 @@ function Section:AddColorpicker(text,default,callback)
       
       Color = {1-X1 or Color[1] , 1-Y1 or Color[2] , Color[3]}
 
-      if x and y then
+      if NewX and NewY then
+
          TweenService:Create(Main.ImageLabel,TweenInfo.new(0.05),{
             ['Position'] = UDim2.new(1 - NewX,-5,1 - NewY,0)
          }):Play()
@@ -1208,7 +1210,7 @@ function Section:AddColorpicker(text,default,callback)
     	local Y1 = math.clamp((y - Saturation.AbsolutePosition.Y) / Saturation.AbsoluteSize.Y,0,1)
       Color = {Color[1] , Color[2] , Y1 or Color[3]}
 
-      if y then
+      if NewY then
          TweenService:Create(Mover,TweenInfo.new(0.05),{
             ['Position'] = UDim2.new(Mover.Position.X.Scale,0,NewY,0)
          }):Play()
@@ -1231,7 +1233,9 @@ function Section:AddColorpicker(text,default,callback)
       local res = Functions:HSV2RGB(Color[1],Color[2],Color[3])
 
       ColorVal.Text = "r: "..res.r.." g: "..res.g.." b: "..res.b
-      callback(Color3.new(res.r,res.g,res.b))
+
+      local callbackcolor = Color3.fromRGB(res.r,res.g,res.b)
+      callback(callbackcolor)
    end
  
    Functions:DraggingEnded(function()
