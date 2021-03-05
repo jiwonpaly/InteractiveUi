@@ -59,3 +59,4 @@ Section:AddLabel("text")
 ## Bug Fixes
 
 - Bug That Occured When Resize Section Which Dont Have Any Child has Been Fixed
+- Now Slider Will Return Only Numberified String value
