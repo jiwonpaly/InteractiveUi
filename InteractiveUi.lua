@@ -574,15 +574,17 @@ function Section:AddToggle(text,defualt,callback)
    local Toggle = Instance.new("Frame")
    local ToggleText = Instance.new("TextLabel")
    local ToggleButton = Instance.new("TextButton")
-   local UICorner_3 = Instance.new("UICorner")
+   local UICorner = Instance.new("UICorner")
    local Mover = Instance.new("ImageLabel")
+   local Default = Instance.new("TextLabel")
+   local Opposite = Instance.new("TextLabel")
 
    Toggle.Name = "Toggle"
    Toggle.Parent = self.Container
-   Toggle.BackgroundColor3 = themes.MainBackground
+   Toggle.BackgroundColor3 = Color3.fromRGB(84, 89, 131)
    Toggle.Position = UDim2.new(0.0576131679, 0, 0.229607254, 0)
    Toggle.Size = UDim2.new(0, 430, 0, 31)
-
+   
    ToggleText.Name = "ToggleText"
    ToggleText.Parent = Toggle
    ToggleText.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
@@ -591,35 +593,58 @@ function Section:AddToggle(text,defualt,callback)
    ToggleText.Size = UDim2.new(0, 298, 0, 31)
    ToggleText.Font = Enum.Font.GothamSemibold
    ToggleText.Text = text or "Toggle Text"
-   ToggleText.TextColor3 = themes.TextColor
+   ToggleText.TextColor3 = Color3.fromRGB(213, 213, 213)
    ToggleText.TextSize = 14.000
    ToggleText.TextXAlignment = Enum.TextXAlignment.Left
-
+   
    ToggleButton.Name = "ToggleButton"
    ToggleButton.Parent = Toggle
    ToggleButton.BackgroundColor3 = Color3.fromRGB(68, 68, 68)
-   ToggleButton.Position = UDim2.new(0.800000012, 0, 0.0967741907, 0)
-   ToggleButton.Size = UDim2.new(0, 67, 0, 24)
+   ToggleButton.Position = UDim2.new(0.860465229, 0, 0.0967741907, 0)
+   ToggleButton.Size = UDim2.new(0, 51, 0, 24)
    ToggleButton.AutoButtonColor = false
    ToggleButton.Font = Enum.Font.SourceSans
    ToggleButton.Text = ""
    ToggleButton.TextColor3 = Color3.fromRGB(0, 0, 0)
    ToggleButton.TextSize = 14.000
-
-   UICorner_3.CornerRadius = UDim.new(0, 15)
-   UICorner_3.Parent = ToggleButton
-
+   
+   UICorner.CornerRadius = UDim.new(0, 15)
+   UICorner.Parent = ToggleButton
+   
    Mover.Name = "Mover"
    Mover.Parent = ToggleButton
-   Mover.BackgroundColor3 = Color3.fromRGB(163, 163, 163)
+   Mover.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
    Mover.BackgroundTransparency = 1.000
-   Mover.Position = UDim2.new(0, 0, 0.0833333358, 0)
+   Mover.Position = UDim2.new(0.0900000036, 0, 0.0829999968, 0)
    Mover.Size = UDim2.new(0, 20, 0, 20)
    Mover.Image = "rbxassetid://3570695787"
-   Mover.ImageColor3 = Color3.fromRGB(193, 193, 193)
+   Mover.ImageColor3 = Color3.fromRGB(229, 229, 229)
    Mover.ScaleType = Enum.ScaleType.Slice
    Mover.SliceCenter = Rect.new(100, 100, 100, 100)
    Mover.SliceScale = 0.130
+   
+   Default.Name = "Default"
+   Default.Parent = Mover
+   Default.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+   Default.BackgroundTransparency = 1.000
+   Default.Position = UDim2.new(0.0716430694, 0, 0, 0)
+   Default.Size = UDim2.new(0, 18, 0, 20)
+   Default.Font = Enum.Font.SourceSans
+   Default.Text = "✖"
+   Default.TextColor3 = Color3.fromRGB(84, 89, 131)
+   Default.TextSize = 14.000
+   
+   Opposite.Name = "Opposite"
+   Opposite.Parent = Mover
+   Opposite.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+   Opposite.BackgroundTransparency = 1.000
+   Opposite.Position = UDim2.new(0.0716430694, 0, 0, 0)
+   Opposite.Size = UDim2.new(0, 18, 0, 20)
+   Opposite.Font = Enum.Font.SourceSans
+   Opposite.Text = "✔"
+   Opposite.TextColor3 = Color3.fromRGB(84, 89, 131)
+   Opposite.TextSize = 14.000
+   Opposite.TextTransparency = 1.000
 
    local active = defualt
 
@@ -645,12 +670,21 @@ function Section:UpdateToggle(Toggle,title,value)
       end
 
       local Positions = {
-         Defualt = UDim2.new(0, 0, 0.0833333358, 0),
-         Opposite = UDim2.new(0.701, 0,0.083, 0)
+         Default = UDim2.new(0.09, 0,0.083, 0),
+         Opposite = UDim2.new(0.56, 0,0.083, 0)
       }
 
-      value = value and "Opposite" or "Defualt"
+      local Colors = {
+         Default = Color3.fromRGB(68, 68, 68),
+         Opposite = Color3.fromRGB(80, 231, 113)
+      }
+
+      value = value and "Opposite" or "Default"
       Functions:Tween(Toggle.ToggleButton.Mover,{Position = Positions[value]},0.2)
+      Functions:Tween(Toggle.ToggleButton.Mover.Default,{TextTransparency = (value == "Default" and 0 or 1)},0.2)
+      Functions:Tween(Toggle.ToggleButton.Mover.Opposite,{TextTransparency = (value == "Opposite" and 0 or 1)},0.2)
+      Functions:Tween(Toggle.ToggleButton,{BackgroundColor3 = Colors[value]},0.2)
+
 
    end
 end
@@ -887,7 +921,7 @@ function Section:AddSlider(text,defualt,min,max,callback)
       while dragging do
 
          local val = self:UpdateSlider(Slider,nil,nil,min,max,defualt)
-         callback(tonumber(val))
+         callback(math.clamp(val,min,max))
 
          Input.Text = val
 
