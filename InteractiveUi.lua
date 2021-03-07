@@ -11,7 +11,8 @@ local themes = {
    PageBackground = Color3.fromRGB(72, 76, 112),
    Glow = Color3.fromRGB(16,16,16),
    SectionBackground = Color3.fromRGB(99,105,154),
-   ModuleBackground = Color3.fromRGB(84, 89, 131)
+   ModuleBackground = Color3.fromRGB(84, 89, 131),
+   InputBackground = Color3.fromRGB(66, 71, 103)
 }
 
 local Functions = {}
@@ -581,7 +582,7 @@ function Section:AddToggle(text,defualt,callback)
 
    Toggle.Name = "Toggle"
    Toggle.Parent = self.Container
-   Toggle.BackgroundColor3 = Color3.fromRGB(84, 89, 131)
+   Toggle.BackgroundColor3 = themes.MainBackground
    Toggle.Position = UDim2.new(0.0576131679, 0, 0.229607254, 0)
    Toggle.Size = UDim2.new(0, 430, 0, 31)
    
@@ -593,7 +594,7 @@ function Section:AddToggle(text,defualt,callback)
    ToggleText.Size = UDim2.new(0, 298, 0, 31)
    ToggleText.Font = Enum.Font.GothamSemibold
    ToggleText.Text = text or "Toggle Text"
-   ToggleText.TextColor3 = Color3.fromRGB(213, 213, 213)
+   ToggleText.TextColor3 = themes.TextColor
    ToggleText.TextSize = 14.000
    ToggleText.TextXAlignment = Enum.TextXAlignment.Left
    
@@ -808,7 +809,7 @@ function Section:UpdateDropdown(Dropdown,title,list,callback)
          DropdownButton.AutoButtonColor = false
          DropdownButton.Font = Enum.Font.Gotham
          DropdownButton.Text = v or "Dropdown Button"
-         DropdownButton.TextColor3 = Color3.fromRGB(213, 213, 213)
+         DropdownButton.TextColor3 = themes.TextColor
          DropdownButton.TextSize = 14.000
 
 
@@ -840,7 +841,7 @@ function Section:AddSlider(text,defualt,min,max,callback)
 
    Slider.Name = "Slider"
    Slider.Parent = self.Container
-   Slider.BackgroundColor3 = Color3.fromRGB(84, 89, 131)
+   Slider.BackgroundColor3 = themes.MainBackground
    Slider.Position = UDim2.new(0.0576131679, 0, 0.477341384, 0)
    Slider.Size = UDim2.new(0, 430, 0, 50)
 
@@ -852,13 +853,13 @@ function Section:AddSlider(text,defualt,min,max,callback)
    SliderTitle.Size = UDim2.new(0, 200, 0, 15)
    SliderTitle.Font = Enum.Font.Gotham
    SliderTitle.Text = text or "Slider Title"
-   SliderTitle.TextColor3 = Color3.fromRGB(213, 213, 213)
+   SliderTitle.TextColor3 = themes.TextColor
    SliderTitle.TextSize = 13.000
    SliderTitle.TextXAlignment = Enum.TextXAlignment.Left
 
    Input.Name = "Input"
    Input.Parent = Slider
-   Input.BackgroundColor3 = Color3.fromRGB(70, 74, 109)
+   Input.BackgroundColor3 = themes.InputBackground
    Input.Position = UDim2.new(0.874418616, 0, 0.150000006, 0)
    Input.Size = UDim2.new(0, 48, 0, 15)
    Input.Font = Enum.Font.SourceSans
@@ -968,7 +969,7 @@ function Section:AddKeybind(text,defualt,callback)
 
    Keybind.Name = "Keybind"
    Keybind.Parent = self.Container
-   Keybind.BackgroundColor3 = Color3.fromRGB(84, 89, 131)
+   Keybind.BackgroundColor3 = themes.MainBackground
    Keybind.Position = UDim2.new(-0.281893015, 0, 0.658610284, 0)
    Keybind.Size = UDim2.new(0, 430, 0, 30)
 
@@ -980,7 +981,7 @@ function Section:AddKeybind(text,defualt,callback)
    KeybindTitle.Size = UDim2.new(0, 298, 0, 15)
    KeybindTitle.Font = Enum.Font.Gotham
    KeybindTitle.Text = text or "Keybind Title"
-   KeybindTitle.TextColor3 = Color3.fromRGB(213, 213, 213)
+   KeybindTitle.TextColor3 = themes.TextColor
    KeybindTitle.TextSize = 13.000
    KeybindTitle.TextXAlignment = Enum.TextXAlignment.Left
 
@@ -992,7 +993,7 @@ function Section:AddKeybind(text,defualt,callback)
    TextButton.AutoButtonColor = false
    TextButton.Font = Enum.Font.Gotham
    TextButton.Text = "None"
-   TextButton.TextColor3 = Color3.fromRGB(213, 213, 213)
+   TextButton.TextColor3 = themes.TextColor
    TextButton.TextSize = 14.000
 
    self.binds[Keybind] = {callback = function()
@@ -1050,7 +1051,7 @@ function Section:AddLabel(text)
    Label.Size = UDim2.new(0, 430, 0, 30)
    Label.Font = Enum.Font.Gotham
    Label.Text = text or "Label Text"
-   Label.TextColor3 = Color3.fromRGB(213, 213, 213)
+   Label.TextColor3 = themes.TextColor
    Label.TextSize = 14.000
 end
 
@@ -1061,7 +1062,7 @@ function Section:AddTextbox(text,defualt,callback)
 
    TextBox.Name = "TextBox"
    TextBox.Parent = self.Container
-   TextBox.BackgroundColor3 = Color3.fromRGB(84, 89, 131)
+   TextBox.BackgroundColor3 = themes.MainBackground
    TextBox.Position = UDim2.new(-0.281893015, 0, 0.839436591, 0)
    TextBox.Size = UDim2.new(0, 430, 0, 30)
 
@@ -1073,19 +1074,19 @@ function Section:AddTextbox(text,defualt,callback)
    TextBoxTitle.Size = UDim2.new(0, 200, 0, 24)
    TextBoxTitle.Font = Enum.Font.Gotham
    TextBoxTitle.Text = text or "TextBox Title"
-   TextBoxTitle.TextColor3 = Color3.fromRGB(213, 213, 213)
+   TextBoxTitle.TextColor3 = themes.TextColor
    TextBoxTitle.TextSize = 14.000
    TextBoxTitle.TextXAlignment = Enum.TextXAlignment.Left
 
    Boxinput.Name = "Boxinput"
    Boxinput.Parent = TextBox
-   Boxinput.BackgroundColor3 = Color3.fromRGB(66, 71, 103)
+   Boxinput.BackgroundColor3 = themes.InputBackground
    Boxinput.Position = UDim2.new(0.527906954, 0, 0.100000001, 0)
    Boxinput.Size = UDim2.new(0, 197, 0, 24)
    Boxinput.Font = Enum.Font.Gotham
    Boxinput.PlaceholderText = defualt or "It was hard"
    Boxinput.Text = ""
-   Boxinput.TextColor3 = Color3.fromRGB(213, 213, 213)
+   Boxinput.TextColor3 = themes.TextColor
    Boxinput.TextSize = 10.000
 
    Boxinput.FocusLost:Connect(function()
@@ -1116,15 +1117,23 @@ function Section:AddColorpicker(text,default,callback)
    local Select = Instance.new("TextButton")
    local UICorner = Instance.new("UICorner")
    local Frame = Instance.new("Frame")
-   local cc = Instance.new("ImageLabel")
-   local Mover = Instance.new("Frame")
-   local Frame_2 = Instance.new("ImageLabel")
-   local ImageLabel = Instance.new("ImageLabel")
-   local ColorVal = Instance.new("TextLabel")
+   local Hue = Instance.new("Frame")
+   local UIGradient = Instance.new("UIGradient")
+   local Mover = Instance.new("ImageLabel")
+   local SV = Instance.new("Frame")
+   local White = Instance.new("Frame")
+   local UIGradient_2 = Instance.new("UIGradient")
+   local Black = Instance.new("Frame")
+   local UIGradient_3 = Instance.new("UIGradient")
+   local Mover_2 = Instance.new("ImageLabel")
+   local R = Instance.new("TextLabel")
+   local G = Instance.new("TextLabel")
+   local B = Instance.new("TextLabel")
+   
    
    ColorPicker.Name = "ColorPicker"
    ColorPicker.Parent = self.Container
-   ColorPicker.BackgroundColor3 = Color3.fromRGB(84, 89, 131)
+   ColorPicker.BackgroundColor3 = themes.MainBackground
    ColorPicker.ClipsDescendants = true
    ColorPicker.Position = UDim2.new(0.0576131679, 0, 0.631775677, 0)
    ColorPicker.Size = UDim2.new(0, 430, 0, 30)
@@ -1137,7 +1146,7 @@ function Section:AddColorpicker(text,default,callback)
    ColorPickerTitle.Size = UDim2.new(0, 200, 0, 30)
    ColorPickerTitle.Font = Enum.Font.Gotham
    ColorPickerTitle.Text = text or "Color Picker Title"
-   ColorPickerTitle.TextColor3 = Color3.fromRGB(213, 213, 213)
+   ColorPickerTitle.TextColor3 = themes.TextColor
    ColorPickerTitle.TextSize = 14.000
    ColorPickerTitle.TextStrokeColor3 = Color3.fromRGB(213, 213, 213)
    ColorPickerTitle.TextXAlignment = Enum.TextXAlignment.Left
@@ -1153,7 +1162,6 @@ function Section:AddColorpicker(text,default,callback)
    Select.Text = ""
    Select.TextColor3 = Color3.fromRGB(0, 0, 0)
    Select.TextSize = 14.000
-   Select.ZIndex = 2
    
    UICorner.CornerRadius = UDim.new(0, 5)
    UICorner.Parent = Select
@@ -1165,151 +1173,159 @@ function Section:AddColorpicker(text,default,callback)
    Frame.Position = UDim2.new(0, 0, 0, 30)
    Frame.Size = UDim2.new(0, 430, 0, 140)
    
-   cc.Name = "cc"
-   cc.Parent = Frame
-   cc.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-   cc.Position = UDim2.new(0.196111783, 0, 0.0623098463, 0)
-   cc.Size = UDim2.new(0, 53, 0, 126)
-   cc.Image = "rbxassetid://359311684"
-   cc.ImageColor3 = Color3.fromRGB(0, 0, 0)
+   Hue.Name = "Hue"
+   Hue.Parent = Frame
+   Hue.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+   Hue.Position = UDim2.new(0.667934537, 0, 0.0199133735, 0)
+   Hue.Size = UDim2.new(0, 21, 0, 116)
+   
+   UIGradient.Color = ColorSequence.new{ColorSequenceKeypoint.new(0.00, Color3.fromRGB(255, 0, 0)), ColorSequenceKeypoint.new(0.17, Color3.fromRGB(255, 255, 0)), ColorSequenceKeypoint.new(0.33, Color3.fromRGB(0, 255, 0)), ColorSequenceKeypoint.new(0.50, Color3.fromRGB(0, 255, 255)), ColorSequenceKeypoint.new(0.67, Color3.fromRGB(0, 0, 255)), ColorSequenceKeypoint.new(0.83, Color3.fromRGB(255, 0, 255)), ColorSequenceKeypoint.new(1.00, Color3.fromRGB(255, 0, 0))}
+   UIGradient.Rotation = 90
+   UIGradient.Parent = Hue
    
    Mover.Name = "Mover"
-   Mover.Parent = cc
+   Mover.Parent = Hue
    Mover.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-   Mover.Position = UDim2.new(-0.0566037744, 0, 0.985000014, 0)
-   Mover.Size = UDim2.new(0, 59, 0, 3)
+   Mover.BackgroundTransparency = 1.000
+   Mover.Position = UDim2.new(0.230373219, 0, 0.468468487, 0)
+   Mover.Size = UDim2.new(0, 11, 0, 11)
+   Mover.Image = "rbxassetid://5100115962"
+   Mover.ImageColor3 = Color3.fromRGB(21, 21, 21)
    
-   Frame_2.Name = "Frame"
-   Frame_2.Parent = Frame
-   Frame_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-   Frame_2.Position = UDim2.new(0.353200078, 0, 0.0681920201, 0)
-   Frame_2.Size = UDim2.new(0, 126, 0, 126)
-   Frame_2.Image = "rbxassetid://1433361550"
-   Frame_2.ZIndex = 5
+   SV.Name = "SV"
+   SV.Parent = Frame
+   SV.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+   SV.BorderSizePixel = 0
+   SV.Position = UDim2.new(0.362025917, 0, 0.0184223726, 0)
+   SV.Size = UDim2.new(0, 118, 0, 118)
    
-   ImageLabel.Parent = Frame_2
-   ImageLabel.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-   ImageLabel.BackgroundTransparency = 1.000
-   ImageLabel.Position = UDim2.new(0.465000004, 0, 0.469999999, 0)
-   ImageLabel.Size = UDim2.new(0, 13, 0, 13)
-   ImageLabel.Image = "rbxassetid://5100115962"
-   ImageLabel.ZIndex = 5
+   White.Name = "White"
+   White.Parent = SV
+   White.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+   White.BorderSizePixel = 0
+   White.Position = UDim2.new(-0.00562864542, 0, -0.00395159144, 0)
+   White.Size = UDim2.new(1, 0, 1, 0)
    
-   ColorVal.Name = "ColorVal"
-   ColorVal.Parent = Frame
-   ColorVal.BackgroundColor3 = Color3.fromRGB(84, 89, 131)
-   ColorVal.BorderColor3 = Color3.fromRGB(25, 25, 25)
-   ColorVal.BorderSizePixel = 0
-   ColorVal.Position = UDim2.new(0.697674394, 0, 0.382779241, 0)
-   ColorVal.Size = UDim2.new(0, 121, 0, 30)
-   ColorVal.Font = Enum.Font.Gotham
-   ColorVal.Text = "r : g : b:"
-   ColorVal.TextColor3 = Color3.fromRGB(213, 213, 213)
-   ColorVal.TextSize = 14.000
+   UIGradient_2.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 0.00), NumberSequenceKeypoint.new(0.00, 0.00), NumberSequenceKeypoint.new(1.00, 1.00)}
+   UIGradient_2.Parent = White
+   
+   Black.Name = "Black"
+   Black.Parent = SV
+   Black.BackgroundColor3 = Color3.fromRGB(0, 0, 0)
+   Black.Position = UDim2.new(0.00198520441, 0, 0.00176904164, 0)
+   Black.Size = UDim2.new(1, 0, 1, 0)
+   
+   UIGradient_3.Rotation = -90
+   UIGradient_3.Transparency = NumberSequence.new{NumberSequenceKeypoint.new(0.00, 0.00), NumberSequenceKeypoint.new(0.00, 0.00), NumberSequenceKeypoint.new(1.00, 1.00)}
+   UIGradient_3.Parent = Black
+   
+   Mover_2.Name = "Mover"
+   Mover_2.Parent = SV
+   Mover_2.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+   Mover_2.BackgroundTransparency = 1.000
+   Mover_2.Position = UDim2.new(0.468468457, 0, 0.468468487, 0)
+   Mover_2.Size = UDim2.new(0, 11, 0, 11)
+   Mover_2.Image = "rbxassetid://5100115962"
+   
+   R.Name = "R"
+   R.Parent = Frame
+   R.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+   R.BackgroundTransparency = 1.000
+   R.Position = UDim2.new(0.111627907, 0, 0.0142857283, 0)
+   R.Size = UDim2.new(0, 79, 0, 19)
+   R.Font = Enum.Font.Gotham
+   R.Text = "R"
+   R.TextColor3 = themes.TextColor
+   R.TextSize = 14.000
+   
+   G.Name = "G"
+   G.Parent = Frame
+   G.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+   G.BackgroundTransparency = 1.000
+   G.Position = UDim2.new(0.111627907, 0, 0.364285737, 0)
+   G.Size = UDim2.new(0, 79, 0, 19)
+   G.Font = Enum.Font.Gotham
+   G.Text = "G"
+   G.TextColor3 = themes.TextColor
+   G.TextSize = 14.000
+   
+   B.Name = "B"
+   B.Parent = Frame
+   B.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+   B.BackgroundTransparency = 1.000
+   B.Position = UDim2.new(0.111627907, 0, 0.707142889, 0)
+   B.Size = UDim2.new(0, 79, 0, 19)
+   B.Font = Enum.Font.Gotham
+   B.Text = "B"
+   B.TextColor3 = themes.TextColor
+   B.TextSize = 14.000
 
-
-   local mouseDown = false
-   local mouseDown1 = false
+   local HueDown = false
+   local SVDown = false
    local tabactive = false
 
    local Color = {1,1,1}
-
-   local function Getp(NewX,NewY)
-      local x,y = Mouse.X,Mouse.Y
-      local Main = Frame_2
-      
-      local X1 = math.clamp((x - Main.AbsolutePosition.X) / Main.AbsoluteSize.X,0,1)
-      local Y1 = math.clamp((y - Main.AbsolutePosition.Y) / Main.AbsoluteSize.Y,0,1)
-      
-      Color = {1-X1 or Color[1] , 1-Y1 or Color[2] , Color[3]}
-
-      if NewX and NewY then
-
-         TweenService:Create(Main.ImageLabel,TweenInfo.new(0.05),{
-            ['Position'] = UDim2.new(1 - NewX,-5,1 - NewY,0)
-         }):Play()
-      else
-         TweenService:Create(Main.ImageLabel,TweenInfo.new(0.05),{
-            ['Position'] = UDim2.new(X1,-5,Y1 ,0)
-         }):Play()
-      end
-
-      return X1,Y1
-   end
-
-   local function GetSaturation(NewY)
-      local y = Mouse.Y
-      local Saturation = cc
-
-    	local Y1 = math.clamp((y - Saturation.AbsolutePosition.Y) / Saturation.AbsoluteSize.Y,0,1)
-      Color = {Color[1] , Color[2] , Y1 or Color[3]}
-
-      if NewY then
-         TweenService:Create(Mover,TweenInfo.new(0.05),{
-            ['Position'] = UDim2.new(Mover.Position.X.Scale,0,NewY,0)
-         }):Play()
-      else
-         TweenService:Create(Mover,TweenInfo.new(0.05),{
-            ['Position'] = UDim2.new(Mover.Position.X.Scale,0,Y1,0)
-         }):Play()
-      end
-
-	   return Y1
-   end
-
-   local function SetColor(h,s,v)
-      local Saturation = cc
-      Color = {h or Color[1],s or Color[2], v or Color[3]}
-      Select.BackgroundColor3 = Color3.fromHSV(unpack(Color))
-      Saturation.BackgroundColor3 = Color3.fromHSV(Color[1],Color[2],1)
-
-    
-      local res = Functions:HSV2RGB(Color[1],Color[2],Color[3])
-
-      ColorVal.Text = "r: "..res.r.." g: "..res.g.." b: "..res.b
-
-      local callbackcolor = Color3.fromRGB(res.r,res.g,res.b)
-      callback(callbackcolor)
-   end
  
-   Functions:DraggingEnded(function()
-      mouseDown,mouseDown1 = false,false
-   end)
-
-
-   if default then
-      local h,s,v = Color3.toHSV(default)
-      SetColor(h,s,v)
-      Getp(h,v)
-      GetSaturation(s)
-   end
-
-
-   Frame_2.InputBegan:Connect(function(a)
-      local Main = Frame_2
-      if a.UserInputType == Enum.UserInputType.MouseButton1 then
-         mouseDown = true
-
-         while mouseDown do
-            local x,y = Getp()
-            SetColor(1 - x,1 - y,nil)
-            RunService.RenderStepped:Wait()
-         end
+   Hue.InputBegan:Connect(function(key)
+      if key.UserInputType == Enum.UserInputType.MouseButton1 then
+         HueDown = true
       end
    end)
-
-   cc.InputBegan:Connect(function(a)
-      if a.UserInputType == Enum.UserInputType.MouseButton1 then
-         mouseDown1 = true
-
-         while mouseDown1 do
-            local Y = GetSaturation()
-            SetColor(nil,nil,Y)
-            RunService.RenderStepped:Wait()
-         end
+   
+   Hue.InputEnded:Connect(function(key)
+      if key.UserInputType == Enum.UserInputType.MouseButton1 then
+         HueDown = false
       end
    end)
- 
+   
+   SV.InputBegan:Connect(function(key)
+      if key.UserInputType == Enum.UserInputType.MouseButton1 then
+         SVDown = true
+      end
+   end)
+   
+   SV.InputEnded:Connect(function(key)
+      if key.UserInputType == Enum.UserInputType.MouseButton1 then
+         SVDown = false
+      end
+   end)
+   
+   SV.BackgroundColor3 = Color3.fromHSV(Color[1],1,1)
+
+   RunService.RenderStepped:Connect(function ()
+      if HueDown then
+         local Y = math.clamp((Mouse.Y - Hue.AbsolutePosition.Y) / Hue.AbsoluteSize.Y,0,1)
+         
+         Color = {Y,Color[2],Color[3]}
+         SV.BackgroundColor3 = Color3.fromHSV(Color[1],1,1)
+         Select.BackgroundColor3 = Color3.fromHSV(unpack(Color))
+         TweenService:Create(Hue.Mover,TweenInfo.new(0.1),{
+            ["Position"] = UDim2.new(0.23,0,Y,0)
+         }):Play()
+
+         local res = Functions:HSV2RGB(unpack(Color))
+
+         callback(Color3.new(res.r,res.g,res.b))
+      end
+      
+      if SVDown then
+         local X = math.clamp((Mouse.X - SV.AbsolutePosition.X) / SV.AbsoluteSize.X,0,1)
+         local Y = math.clamp((Mouse.Y - SV.AbsolutePosition.Y) / SV.AbsoluteSize.Y,0,1)
+         
+         Color = {Color[1],X or Color[2],1 - Y or Color[3]}
+         Select.BackgroundColor3 = Color3.fromHSV(unpack(Color))
+         TweenService:Create(SV.Mover,TweenInfo.new(0.1),{
+            ["Position"] = UDim2.new(X,0,Y,0)
+         }):Play()
+
+         local res = Functions:HSV2RGB(unpack(Color))
+
+         callback(Color3.new(res.r,res.g,res.b))
+      end
+      
+      RunService.RenderStepped:Wait()
+   end)
+   
 
    Select.MouseButton1Click:Connect(function()
 
