@@ -3,6 +3,7 @@ local LocalPlayer = game.Players.LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
 local RunService = game:GetService("RunService")
 local TweenService = game:GetService("TweenService")
+local TextService = game:GetService("TextService")
 
 local themes = {
    TextColor = Color3.fromRGB(213,213,213),
@@ -48,14 +49,21 @@ function Functions:Pop(object, shrink)
    
    clone.Parent = object
    clone:ClearAllChildren()
+
+   local what = {
+      image = "ImageTransparency",
+      normal = "BackgroundTransparency"
+   }
    
-   object.BackgroundTransparency = 1
+   val = what[string.find(object.ClassName,"Image") and "image" or "normal"]
+
+   object[val] = 1
    Functions:Tween(clone, {Size = object.Size}, 0.2)
    
    spawn(function()
       wait(0.2)
    
-      object.BackgroundTransparency = 0
+      object[val] = 0
       clone:Destroy()
    end)
    
@@ -257,12 +265,15 @@ function Library.new(TitleText,icon)
    InteractiveUi.Parent = game:GetService("CoreGui")
    InteractiveUi.ResetOnSpawn = false
 
+   local IntroSize = UDim2.new(0, 748, 0, 442)
+
    Main.Name = "Main"
    Main.Parent = InteractiveUi
    Main.BackgroundColor3 = Color3.fromRGB(84, 89, 131)
    Main.BorderSizePixel = 0
    Main.Position = UDim2.new(0.272782505, 0, 0.239104837, 0)
-   Main.Size = UDim2.new(0, 748, 0, 442)
+   Main.Size = UDim2.new(0, 0, 0, 0)
+   Main.ClipsDescendants = true
 
    Glow.Name = "Glow"
    Glow.Parent = Main
@@ -340,13 +351,170 @@ function Library.new(TitleText,icon)
    Functions:Draggable(LeftSide,Main)
    Functions:InputDetector()
 
+   wait(.3)
+
+   Functions:Tween(Main,{Size = IntroSize},0.3)
+
+   wait(.2)
+
+   Main.ClipsDescendants = false
+
    return setmetatable({
       Main = Main,
       Library = self,
       PageList = PageList,
       PageContainer = RightSide,
-      pages = {}
+      pages = {},
+      Screen = InteractiveUi
    },Library)
+end
+
+function Library:addNoti(title,text,callback)
+
+   local Notification = Instance.new("Frame")
+   local Glow = Instance.new("ImageLabel")
+   local Main = Instance.new("Frame")
+   local Accept = Instance.new("ImageButton")
+   local Decline = Instance.new("ImageButton")
+   local Top = Instance.new("Frame")
+   local Glow_2 = Instance.new("ImageLabel")
+   local Title = Instance.new("TextLabel")
+   local Content = Instance.new("TextLabel")
+
+   Notification.Name = "Notification"
+   Notification.Parent = self.Screen
+   Notification.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+   Notification.BorderSizePixel = 0
+   Notification.Position = UDim2.new(0, 10, 1, -130)
+   Notification.Size = UDim2.new(0, 0, 0, 0)
+   Notification.ClipsDescendants = true
+
+   Glow.Name = "Glow"
+   Glow.Parent = Notification
+   Glow.BackgroundColor3 = Color3.fromRGB(229, 229, 229)
+   Glow.BackgroundTransparency = 1.000
+   Glow.BorderSizePixel = 0
+   Glow.Position = UDim2.new(0, -15, 0, -15)
+   Glow.Size = UDim2.new(1, 30, 1, 30)
+   Glow.Image = "http://www.roblox.com/asset/?id=5028857084"
+   Glow.ImageColor3 = Color3.fromRGB(39, 39, 39)
+   Glow.ScaleType = Enum.ScaleType.Slice
+   Glow.SliceCenter = Rect.new(24, 24, 276, 276)
+
+   Main.Name = "Main"
+   Main.Parent = Notification
+   Main.BackgroundColor3 = Color3.fromRGB(84, 89, 131)
+   Main.BorderSizePixel = 0
+   Main.Size = UDim2.new(1, 0, 1, 0)
+
+   Accept.Name = "Accept"
+   Accept.Parent = Main
+   Accept.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+   Accept.BackgroundTransparency = 1.000
+   Accept.Position = UDim2.new(1, -30, 0.769999981, 0)
+   Accept.Size = UDim2.new(0, 23, 0, 23)
+   Accept.Image = "http://www.roblox.com/asset/?id=6507915574"
+
+   Decline.Name = "Decline"
+   Decline.Parent = Main
+   Decline.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+   Decline.BackgroundTransparency = 1.000
+   Decline.Position = UDim2.new(1, -50, 0.769999981, 0)
+   Decline.Size = UDim2.new(0, 23, 0, 23)
+   Decline.Image = "rbxassetid://5012538583"
+
+   Top.Name = "Top"
+   Top.Parent = Main
+   Top.BackgroundColor3 = Color3.fromRGB(72, 76, 112)
+   Top.BorderSizePixel = 0
+   Top.Size = UDim2.new(1, 0, 0, 25)
+
+   Glow_2.Name = "Glow"
+   Glow_2.Parent = Top
+   Glow_2.BackgroundColor3 = Color3.fromRGB(229, 229, 229)
+   Glow_2.BackgroundTransparency = 1.000
+   Glow_2.BorderSizePixel = 0
+   Glow_2.Position = UDim2.new(0, -15, 0, -15)
+   Glow_2.Size = UDim2.new(1, 30, 1, 30)
+   Glow_2.Image = "http://www.roblox.com/asset/?id=5028857084"
+   Glow_2.ImageColor3 = Color3.fromRGB(39, 39, 39)
+   Glow_2.ScaleType = Enum.ScaleType.Slice
+   Glow_2.SliceCenter = Rect.new(24, 24, 276, 276)
+
+   Title.Name = "Title"
+   Title.Parent = Top
+   Title.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+   Title.BackgroundTransparency = 1.000
+   Title.Size = UDim2.new(0, 317, 0, 25)
+   Title.Font = Enum.Font.Gotham
+   Title.Text = title or "Title"
+   Title.TextColor3 = Color3.fromRGB(213, 213, 213)
+   Title.TextSize = 14.000
+   Title.TextXAlignment = Enum.TextXAlignment.Left
+
+   Content.Name = "Content"
+   Content.Parent = Main
+   Content.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
+   Content.BackgroundTransparency = 1.000
+   Content.Position = UDim2.new(0, 0, 0.270000011, 0)
+   Content.Size = UDim2.new(0, 317, 0, 50)
+   Content.Font = Enum.Font.Gotham
+   Content.Text = text or "Text"
+   Content.TextColor3 = Color3.fromRGB(213, 213, 213)
+   Content.TextSize = 16.000
+   Content.TextXAlignment = Enum.TextXAlignment.Left
+
+   if self.Notification then 
+      self.Notification:Destroy()
+      self.Notification = nil
+   end
+
+   self.Notification = Notification
+
+
+   Functions:Draggable(Top,Notification)
+
+   local TitleSize = TextService:GetTextSize(Title.Text,Title.TextSize,Title.Font,Vector2.new(math.huge,25))
+   local ContentSize = TextService:GetTextSize(Content.Text,Content.TextSize,Content.Font,Vector2.new(math.huge,50))
+
+   val = (TitleSize.X < ContentSize.X and ContentSize.X or TitleSize.X) + 20
+
+   if self.lastNoti then
+      Notification.Position = self.lastNoti
+   end
+
+   Functions:Tween(Notification,{Size = UDim2.new(0,val,0,100)},0.2)
+   wait(.1)
+   Notification.ClipsDescendants = false
+
+   local closecallback = function(obj)
+      Functions:Pop(obj,10)
+
+      self.lastNoti = Notification.Position
+
+      Notification.ClipsDescendants = true
+
+      Functions:Tween(Notification,{Size = UDim2.new(0,0,0,0)},0.2)
+
+      wait(.4)
+
+      self.Notification = nil
+      Notification:Destroy()
+
+   end
+
+   Accept.MouseButton1Down:Connect(function()
+      closecallback(Accept)
+
+      callback(true)
+   end)
+
+   Decline.MouseButton1Down:Connect(function()
+      closecallback(Decline)
+
+      callback(false)
+   end)
+
 end
 
 function Page.new(Library,Title)
@@ -382,6 +550,7 @@ function Page.new(Library,Title)
    PageButton.TextColor3 = themes.TextColor
    PageButton.TextSize = 14.000
    PageButton.Text = Title
+   PageButton.TextTransparency = 0.7
 
    Glow.Name = "Glow"
    Glow.Parent = PageButton
