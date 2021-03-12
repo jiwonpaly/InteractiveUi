@@ -62,6 +62,22 @@ function Functions:Pop(object, shrink)
    return clone
 end
 
+function Functions:Create(ins,properties,child)
+   local Instance = Instance.new(ins)
+
+   for i,v in pairs (properties) do
+      Instance[i] = v
+   end
+
+   for i,v in pairs (child or {}) do
+      v.Parent = Instance
+   end
+
+   return Instance
+
+end
+
+
 function Functions:Draggable(frame,parent)
    parent = parent or frame
         
@@ -338,6 +354,7 @@ function Page.new(Library,Title)
    local UIListLayout_2 = Instance.new("UIListLayout")
    local PageButton = Instance.new("TextButton")
    local UICorner = Instance.new("UICorner")
+   local Glow = Instance.new("ImageLabel")
 
    PageFrame.Name = "PageFrame"
    PageFrame.Parent = Library.PageContainer
@@ -365,6 +382,18 @@ function Page.new(Library,Title)
    PageButton.TextColor3 = themes.TextColor
    PageButton.TextSize = 14.000
    PageButton.Text = Title
+
+   Glow.Name = "Glow"
+   Glow.Parent = PageButton
+   Glow.BackgroundColor3 = Color3.fromRGB(229, 229, 229)
+   Glow.BackgroundTransparency = 1.000
+   Glow.BorderSizePixel = 0
+   Glow.Position = UDim2.new(0, -15, 0, -15)
+   Glow.Size = UDim2.new(1, 30, 1, 30)
+   Glow.Image = "http://www.roblox.com/asset/?id=5028857084"
+   Glow.ImageColor3 = Color3.fromRGB(39, 39, 39)
+   Glow.ScaleType = Enum.ScaleType.Slice
+   Glow.SliceCenter = Rect.new(24, 24, 276, 276)
 
    UICorner.CornerRadius = UDim.new(0, 5)
    UICorner.Parent = PageButton
@@ -413,7 +442,7 @@ function Section.new(page,Title)
       Page = page,
       Container = SectionFrame,
       module = {},
-      binds = {}
+      binds = {},
    },Section)
 end
 
@@ -469,8 +498,11 @@ function Library:SelectPage(page,toggle)
       end
       wait(.05)
       page:Resize(true)
+ 
+      page.PageButton.TextTransparency = 0
 
    else
+      page.PageButton.TextTransparency = 0.7
       for i,v in pairs (page.Sections) do
          Functions:Tween(v.Container,{Size = UDim2.new(1,-30,0,0)},0.07)
       end
@@ -878,12 +910,22 @@ function Section:AddSlider(text,defualt,min,max,callback)
    Slider_2.TextColor3 = Color3.fromRGB(0, 0, 0)
    Slider_2.TextSize = 14.000
    Slider_2.AutoButtonColor = false
+   
+   Functions:Create("UiCorner",{
+      Parent = Slider_2,
+      CornerRadius = UDim.new(0,5)
+   })
 
    SliderFrame.Name = "SliderFrame"
    SliderFrame.Parent = Slider_2
    SliderFrame.BackgroundColor3 = Color3.fromRGB(101, 107, 157)
    SliderFrame.BorderSizePixel = 0
    SliderFrame.Size = UDim2.new(0, 0, 1, 0)
+
+   Functions:Create("UiCorner",{
+      Parent = SliderFrame,
+      CornerRadius = UDim.new(0,5)
+   })
 
    Circle.Name = "Circle"
    Circle.Parent = SliderFrame
@@ -1292,7 +1334,7 @@ function Section:AddColorpicker(text,default,callback)
    
    SV.BackgroundColor3 = Color3.fromHSV(Color[1],1,1)
 
-   RunService.RenderStepped:Connect(function ()
+   RunService.RenderStepped:Connect(function()
       if HueDown then
          local Y = math.clamp((Mouse.Y - Hue.AbsolutePosition.Y) / Hue.AbsoluteSize.Y,0,1)
          
