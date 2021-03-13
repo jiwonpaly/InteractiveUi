@@ -271,9 +271,10 @@ function Library.new(TitleText,icon)
    Main.Parent = InteractiveUi
    Main.BackgroundColor3 = Color3.fromRGB(84, 89, 131)
    Main.BorderSizePixel = 0
-   Main.Position = UDim2.new(0.272782505, 0, 0.239104837, 0)
+   Main.Position = UDim2.new(0.5, 0, 0.5, 0)
    Main.Size = UDim2.new(0, 0, 0, 0)
    Main.ClipsDescendants = true
+   Main.AnchorPoint = Vector2.new(0.5,0.5)
 
    Glow.Name = "Glow"
    Glow.Parent = Main
@@ -385,9 +386,10 @@ function Library:addNoti(title,text,callback)
    Notification.Parent = self.Screen
    Notification.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
    Notification.BorderSizePixel = 0
-   Notification.Position = UDim2.new(0, 10, 1, -130)
+   Notification.Position = UDim2.new(0, 180, 1, -90)
    Notification.Size = UDim2.new(0, 0, 0, 0)
    Notification.ClipsDescendants = true
+   Notification.AnchorPoint = Vector2.new(0.5,0.5)
 
    Glow.Name = "Glow"
    Glow.Parent = Notification
@@ -1476,16 +1478,15 @@ function Section:AddColorpicker(text,default,callback)
    local tabactive = false
 
    local Color = {1,1,1}
+
+   Functions:DraggingEnded(function()
+      HueDown = false
+      SVDown = false
+   end)
  
    Hue.InputBegan:Connect(function(key)
       if key.UserInputType == Enum.UserInputType.MouseButton1 then
          HueDown = true
-      end
-   end)
-   
-   Hue.InputEnded:Connect(function(key)
-      if key.UserInputType == Enum.UserInputType.MouseButton1 then
-         HueDown = false
       end
    end)
    
@@ -1494,25 +1495,22 @@ function Section:AddColorpicker(text,default,callback)
          SVDown = true
       end
    end)
-   
-   SV.InputEnded:Connect(function(key)
-      if key.UserInputType == Enum.UserInputType.MouseButton1 then
-         SVDown = false
-      end
-   end)
-   
+
    SV.BackgroundColor3 = Color3.fromHSV(Color[1],1,1)
+
+   if default then
+      self:UpdateColorpicker(ColorPicker,nil,default)
+
+      Color = {Color3.toHSV(default)}
+
+   end
 
    RunService.RenderStepped:Connect(function()
       if HueDown then
          local Y = math.clamp((Mouse.Y - Hue.AbsolutePosition.Y) / Hue.AbsoluteSize.Y,0,1)
          
          Color = {Y,Color[2],Color[3]}
-         SV.BackgroundColor3 = Color3.fromHSV(Color[1],1,1)
-         Select.BackgroundColor3 = Color3.fromHSV(unpack(Color))
-         TweenService:Create(Hue.Mover,TweenInfo.new(0.1),{
-            ["Position"] = UDim2.new(0.23,0,Y,0)
-         }):Play()
+         self:UpdateColorpicker(ColorPicker,nil,Color,nil)
 
          local res = Functions:HSV2RGB(unpack(Color))
 
@@ -1523,12 +1521,10 @@ function Section:AddColorpicker(text,default,callback)
          local X = math.clamp((Mouse.X - SV.AbsolutePosition.X) / SV.AbsoluteSize.X,0,1)
          local Y = math.clamp((Mouse.Y - SV.AbsolutePosition.Y) / SV.AbsoluteSize.Y,0,1)
          
-         Color = {Color[1],X or Color[2],1 - Y or Color[3]}
-         Select.BackgroundColor3 = Color3.fromHSV(unpack(Color))
-         TweenService:Create(SV.Mover,TweenInfo.new(0.1),{
-            ["Position"] = UDim2.new(X,0,Y,0)
-         }):Play()
+         self:UpdateColorpicker(ColorPicker,nil,{Color[1],X,Y},nil)
 
+         Color = {Color[1],X,Y}
+         
          local res = Functions:HSV2RGB(unpack(Color))
 
          callback(Color3.new(res.r,res.g,res.b))
@@ -1563,7 +1559,7 @@ function Section:UpdateColorpicker(picker,text,color,active)
 
       if active ~= nil then
          
-         val = active and "open" or "close"
+         local val = active and "open" or "close"
 
          local sizes = {
                open = UDim2.new(0,430,0,170),
@@ -1571,6 +1567,29 @@ function Section:UpdateColorpicker(picker,text,color,active)
          }
 
          Functions:Tween(picker,{Size = sizes[val]},0.2)
+      end
+
+      if color then
+         local Hue = picker.Frame.Hue
+         local SV = picker.Frame.SV
+         local HMover = Hue.Mover
+         local SVMover = SV.Mover
+
+         local h,s,v
+         local color3
+
+         if type(color) == "table" then
+            h,s,v = unpack(color)
+         else
+            color3 = color
+            h,s,v = Color3.toHSV(color3)
+         end
+
+         Functions:Tween(picker.Select,{BackgroundColor3 = Color3.fromHSV(h,s,1 - v)},0.2)
+         Functions:Tween(HMover,{Position = UDim2.new(0.23,0,h,0)},0.2)
+         Functions:Tween(SVMover,{Position = UDim2.new(s,0,v,0)},0.2)
+         Functions:Tween(SV,{BackgroundColor3 = Color3.fromHSV(h,1,1)},0.2)
+
       end
    end
 end
