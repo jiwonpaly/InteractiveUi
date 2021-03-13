@@ -21,6 +21,10 @@ local Window = library.new("Library Title")
 local Tab = Window:addPage("Page Title")
 local Section = Tab:addSection("Section Title")
 
+Window:addNoti("title one","whatever you write",function(v)
+   print(v) -- return boolean
+end)
+
 Section:AddButton("text",function()
    print("hi")
 end)
