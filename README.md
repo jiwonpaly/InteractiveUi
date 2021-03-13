@@ -60,7 +60,8 @@ Section:AddLabel("text")
 
 - RealReal#0001
 
-## Bug Fixes
+## Change Log
 
 - Bug That Occured When Resize Section Which Dont Have Any Child has Been Fixed
 - Now, Slider Will Return Clamp Value of Callback ex :) min = 1 max = 10 if you set value as textbox and value is over max then slider return max val
+- Changing Color is now Working with updateColorpicker
