@@ -6,6 +6,8 @@ Please Read Document of Usage
 
 This Ui Library is Still In Developing.
 
+### ONLY FOR RLBX NOT VANILA LUA
+
 ### Example
 
 ```lua
