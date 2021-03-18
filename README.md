@@ -6,12 +6,6 @@ Please Read Document of Usage
 
 This Ui Library is Still In Developing.
 
-It Would Be Continued For My Plan To Be Completed
-
-```lua
-print("cheating")
-```
-
 ### Example
 
 ```lua
