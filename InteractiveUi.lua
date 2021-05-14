@@ -248,15 +248,15 @@ Library.__index = Library
 Page.__index = Page
 Section.__index = Section
 
---For Serveral Reasons, I Didnt use Create Function :>
-function Library.new(TitleText,icon)
+Library.activated = true;
+
+function Library.new(TitleText)
    local InteractiveUi = Instance.new("ScreenGui")
    local Main = Instance.new("Frame")
    local Glow = Instance.new("ImageLabel")
    local LeftSide = Instance.new("Frame")
    local Glow_2 = Instance.new("ImageLabel")
    local Title = Instance.new("TextLabel")
-   local Icon = Instance.new("ImageLabel")
    local PageList = Instance.new("ScrollingFrame")
    local UIListLayout = Instance.new("UIListLayout")
    local RightSide = Instance.new("Frame")
@@ -312,19 +312,12 @@ function Library.new(TitleText,icon)
    Title.BackgroundTransparency = 1.000
    Title.Position = UDim2.new(0, 10, 0.0565610826, 10)
    Title.Size = UDim2.new(0, 186, 0, 103)
-   Title.Font = Enum.Font.Nunito
+   Title.Font = Enum.Font.SourceSansLight
    Title.Text = TitleText or "Interactive UI"
    Title.TextColor3 = Color3.fromRGB(255, 255, 255)
    Title.TextSize = 30.000
    Title.TextWrapped = true
    Title.TextXAlignment = Enum.TextXAlignment.Left
-
-   Icon.Name = "Icon"
-   Icon.Parent = LeftSide
-   Icon.BackgroundColor3 = Color3.fromRGB(255, 255, 255)
-   Icon.BackgroundTransparency = 1.000
-   Icon.Size = UDim2.new(0, 64, 0, 64)
-   Icon.Image = icon or "rbxassetid://6451147014"
 
    PageList.Name = "PageList"
    PageList.Parent = LeftSide
@@ -381,6 +374,8 @@ function Library:addNoti(title,text,callback)
    local Glow_2 = Instance.new("ImageLabel")
    local Title = Instance.new("TextLabel")
    local Content = Instance.new("TextLabel")
+
+   callback = callback or function(cb) end);
 
    Notification.Name = "Notification"
    Notification.Parent = self.Screen
@@ -656,6 +651,7 @@ function Library:SelectPage(page,toggle)
 
       wait(.1)
       page.Container.Visible = true
+      page.PageButton.TextTransparency = 0
 
       if FocusedPage then
          FocusedPage.Container.Visible = false
@@ -669,8 +665,6 @@ function Library:SelectPage(page,toggle)
       end
       wait(.05)
       page:Resize(true)
- 
-      page.PageButton.TextTransparency = 0
 
    else
       page.PageButton.TextTransparency = 0.7
