@@ -375,7 +375,7 @@ function Library:addNoti(title,text,callback)
    local Title = Instance.new("TextLabel")
    local Content = Instance.new("TextLabel")
 
-   callback = callback or function(cb) end);
+   callback = callback or function(cb) end;
 
    Notification.Name = "Notification"
    Notification.Parent = self.Screen
