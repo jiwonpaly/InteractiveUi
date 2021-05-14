@@ -375,7 +375,7 @@ function Library:addNoti(title,text,callback)
    local Title = Instance.new("TextLabel")
    local Content = Instance.new("TextLabel")
 
-   callback = callback or function(cb) end
+   callback = callback or function(cb) end);
 
    Notification.Name = "Notification"
    Notification.Parent = self.Screen
@@ -1076,7 +1076,7 @@ function Section:AddSlider(text,defualt,min,max,callback)
    Slider_2.TextSize = 14.000
    Slider_2.AutoButtonColor = false
    
-   Functions:Create("UiCorner",{
+   Functions:Create("UICorner",{
       Parent = Slider_2,
       CornerRadius = UDim.new(0,5)
    })
@@ -1087,7 +1087,7 @@ function Section:AddSlider(text,defualt,min,max,callback)
    SliderFrame.BorderSizePixel = 0
    SliderFrame.Size = UDim2.new(0, 0, 1, 0)
 
-   Functions:Create("UiCorner",{
+   Functions:Create("UICorner",{
       Parent = SliderFrame,
       CornerRadius = UDim.new(0,5)
    })
