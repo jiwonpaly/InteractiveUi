@@ -1,12 +1,6 @@
 # InteractiveUi
 
-Thank You For Using My Ui Library !
 
-This Ui Library is Still In Developing.
-
-i referred to venxy library
-
-### ONLY FOR RLBX NOT VANILA LUA
 
 ### Example
 
@@ -52,10 +46,7 @@ end)
 Section:AddLabel("text")
 
 ```
-## Credits
-
-- RealReal#0001
 
 ## Change Log
-
-- nothing changed on recent . i will update some animations
+- small change: if notifications' are not given, that process will be automatically replaced to default cb.
+- and i removed an icon param. it makes ui dirty.
