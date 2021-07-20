@@ -1,3 +1,8 @@
+repeat wait() until game.Players.LocalPlayer ~= nil;
+
+game.Players.LocalPlayer:Kick('Check readme.');
+return;
+
 local UserInputService = game:GetService("UserInputService")
 local LocalPlayer = game.Players.LocalPlayer
 local Mouse = LocalPlayer:GetMouse()
